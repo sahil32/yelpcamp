@@ -3,7 +3,6 @@ const app = express();
 const ejs = require('ejs');
 const mongoose = require('mongoose');
 const path = require('path');
-
 const Campground = require('./models/campground');
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp',{
@@ -25,6 +24,11 @@ app.get('/makeCampground',async (req, res)=>{
     await camp.save();
     res.send(camp);
 
+})
+
+app.get('/campgrounds', async (req,res)=>{
+    const campgrounds = await new Campground.find({});
+    res.render('campgrounds/index',{campgrounds})
 })
 
 app.get('/', (req, res)=>{
